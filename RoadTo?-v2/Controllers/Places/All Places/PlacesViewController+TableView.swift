@@ -18,10 +18,27 @@ extension PlacesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        return DataManager.shared.places.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+          let cell = tableView.dequeueReusableCell(withIdentifier: "PlacesCell", for: indexPath) as! PlacesTableViewCell
+          let place = DataManager.shared.places[indexPath.row]
+          
+          cell.configure(with: place)
+          
+          return cell
     }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlace = DataManager.shared.places[indexPath.row]  // DataManager'dan alınan veri
+        let detailVC = PlaceDetailsViewController()
+        detailVC.place = selectedPlace // Seçilen yeri yeni ekrana gönder
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
+    
+    
+    
 }

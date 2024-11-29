@@ -16,12 +16,19 @@ class NameViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var button: UIButton!
     
+    var keyboardViewModel: KeyboardViewModel!
+    
     var userInfo = UserInfo() // Veri modeli
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        keyboardViewModel = KeyboardViewModel(viewController: self)
+        keyboardViewModel.addTapGestureToDismissKeyboard()
+        
         setupUI()
+        self.navigationItem.hidesBackButton = true
+        
     }
     
     func setupUI() {
@@ -37,10 +44,10 @@ class NameViewController: UIViewController {
     @IBAction func buttonPressed(_ sender: Any) {
         
         guard let name = nameTextField.text, !name.isEmpty else {
-                   showAlert(message: "Adınızı giriniz.")
-                   return
+            showAlert(message: "Adınızı giriniz.")
+            return
         }
-
+        
         userInfo.name = name
         let surnameVC = SurnameViewController()
         surnameVC.userInfo = userInfo
@@ -50,7 +57,7 @@ class NameViewController: UIViewController {
     private func showAlert(message: String) {
         let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Tamam", style: .default))
-           present(alert, animated: true)
-       }
-
+        present(alert, animated: true)
+    }
+    
 }

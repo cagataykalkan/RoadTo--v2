@@ -6,24 +6,66 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class RegisterPageViewController: UIViewController {
-
+    
+    //IBOutlets
+    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var registerButton: UIButton!
+    
+    var keyboardViewModel: KeyboardViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        keyboardViewModel = KeyboardViewModel(viewController: self)
+        keyboardViewModel.addTapGestureToDismissKeyboard()
+        setupUI()
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    
+    private func setupUI(){
+        welcomeLabel.text = "RoadTo? üyesi olun."
+        welcomeLabel.textColor = UIColor(named: K.BrandColors.black3)
+        welcomeLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
+        
+        emailLabel.text = "E-posta adresi"
+        emailLabel.textColor = UIColor(named: K.BrandColors.black2)
+        emailLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
+        
+        passwordLabel.text = "Parola"
+        passwordLabel.textColor = UIColor(named: K.BrandColors.black2)
+        passwordLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
+        
+        registerButton.backgroundColor = .black
+        registerButton.tintColor = .white
+        registerButton.titleLabel?.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
+        registerButton.layer.cornerRadius = 20
+        
     }
-    */
-
+    
+    @IBAction func registerButtonPressed(_ sender: Any) {
+        if let email = emailTextField.text , let password = passwordTextField.text{
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let e = error{
+                    print(e.localizedDescription)
+                }else{
+                    let destinationVC = NameViewController()
+                    self.navigationController?.pushViewController(destinationVC, animated: true)
+                }
+                
+            }
+        }
+        
+        
+    }
 }

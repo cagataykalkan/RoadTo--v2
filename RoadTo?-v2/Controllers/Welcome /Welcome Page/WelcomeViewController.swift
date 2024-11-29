@@ -84,11 +84,13 @@ class WelcomeViewController: UIViewController {
        }
     
     @IBAction func nextButtonPressed(_ sender: Any) {
+        let vc = PlacesViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
     @IBAction func settingsButtonPressed(_ sender: Any) {
-        let vc = UserInfoSettingsViewController()
+        let vc = UserInfoPageViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     

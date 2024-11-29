@@ -8,16 +8,21 @@
 import UIKit
 
 class BirthdateViewController: UIViewController {
-
+    
     @IBOutlet weak var birthdateLabel: UILabel!
     @IBOutlet weak var birthdateTextfield: UITextField!
     @IBOutlet weak var button: UIButton!
     
     var userInfo = UserInfo() // Veri modeli
+    var keyboardViewModel: KeyboardViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        keyboardViewModel = KeyboardViewModel(viewController: self)
+        keyboardViewModel.addTapGestureToDismissKeyboard()
+        
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(changeDate(datePicker:)), for: UIControl.Event.valueChanged)
@@ -27,18 +32,21 @@ class BirthdateViewController: UIViewController {
         birthdateTextfield.text = dateFormat(date: Date())
         
         setupUI()
+        
+        self.navigationItem.hidesBackButton = true
+        
     }
     
     func setupUI() {
         birthdateLabel.text = "Doğum tarihinizi seçiniz."
         birthdateLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
-              button.setTitle("Devam et", for: .normal)
-              button.backgroundColor = .black
-              button.tintColor = .white
-              button.layer.cornerRadius = 20
-          }
-
-
+        button.setTitle("Devam et", for: .normal)
+        button.backgroundColor = .black
+        button.tintColor = .white
+        button.layer.cornerRadius = 20
+    }
+    
+    
     @objc func changeDate(datePicker: UIDatePicker) {
         birthdateTextfield.text = dateFormat(date: datePicker.date)
     }
@@ -52,21 +60,21 @@ class BirthdateViewController: UIViewController {
     @IBAction func buttonPressed(_ sender: Any) {
         // Soyad bilgisini alıyoruz
         guard let birthdate = birthdateTextfield.text, !birthdate.isEmpty else {
-                      showAlert(message: "Doğum gününüzü giriniz.")
-                      return
-                  }
-                  
-                  // Soyadı kullanıcı bilgilerine ekliyoruz
+            showAlert(message: "Doğum gününüzü giriniz.")
+            return
+        }
+        
+        // Soyadı kullanıcı bilgilerine ekliyoruz
         userInfo.birthDate = birthdate
         let birthdateVC = ChildStatusViewController()
         birthdateVC.userInfo = userInfo
-                          navigationController?.pushViewController(birthdateVC, animated: true)
+        navigationController?.pushViewController(birthdateVC, animated: true)
         
     }
     
     private func showAlert(message: String) {
-               let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-               alert.addAction(UIAlertAction(title: "Tamam", style: .default))
-               present(alert, animated: true)
-           }
+        let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        present(alert, animated: true)
+    }
 }

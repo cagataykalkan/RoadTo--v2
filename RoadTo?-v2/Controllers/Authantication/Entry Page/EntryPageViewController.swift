@@ -6,24 +6,52 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EntryPageViewController: UIViewController {
 
+    //IBOutlets
+    @IBOutlet weak var welcomeLabel: UILabel!
+    
+    @IBOutlet weak var signInWithApple: UIButton!
+    @IBOutlet weak var signInWithGoogle: UIButton!
+    @IBOutlet weak var signInWithMail: UIButton!
+    
+    @IBOutlet weak var appleView: UIView!
+    @IBOutlet weak var googleView: UIView!
+    @IBOutlet weak var mailView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        navigationItem.hidesBackButton = true
+        
+        setupUI()
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    
+    func setupUI() {
+        welcomeLabel.text = "Seyahatinizi planlamaya başlamak için giriş yapın."
+        appleView.layer.borderWidth = 2
+        appleView.layer.cornerRadius = 30
+        googleView.layer.borderWidth = 2
+        googleView.layer.cornerRadius = 30
+        mailView.layer.borderWidth = 2
+        mailView.layer.cornerRadius = 30
     }
-    */
+    
+    
+    @IBAction func signInWithMailPressed(_ sender: Any) {
+        let destinationVC = LoginPageViewController()
+        navigationController?.pushViewController(destinationVC, animated: true)
+
+    }
+    
+    
+    
+    
+    
+    
 
 }

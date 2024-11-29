@@ -24,26 +24,6 @@ struct K {   // K = Constants
         static let yellow = "AppYellow"
     }
     
-    struct identifiers {
-        static let sliderCell = "homePageSliderCellImage"
-        static let toPlaces = "welcomeToPlaces"
-        static let placesCell = "placesTableViewCell"
-        static let toLikedPlaces = "PlacesToLikedPlaces"
-        static let placesToDetails = "placesPageToDetailPage"
-        static let likedToDetail = "likedPlacesToDetailPage"
-        static let toEmpty = "placesPageToEmptyPage"
-        static let emptyToPlaces = "emptyToPlaces"
-        static let detailToEmpty = "detailPageToEmptyPage"
-        static let likedToEmpty = "likedToEmpty"
-        static let authToWelcome = "authToWelcome"
-        static let loginToWelcome = "loginToWelcome"
-        static let registerToWelcome = "registerToWelcome"
-        static let loginToRegister = "loginToRegister"
-        static let likedToRoutes = "likedToRoutes"
-        static let routesCell = "routesTableViewCell"
-
-    }
-    
     struct Fonts {
         static let poppinsRegular = "Poppins-Regular"
         static let poppinsMedium = "Poppins-Medium"
@@ -51,6 +31,8 @@ struct K {   // K = Constants
         static let poppinsBlack = "Poppins-Black"
         static let poppinsEkstraBold = "Poppins-ExtraBold"
         static let poppinsSemiBold = "Poppins-SemiBold"
+        static let poppinsLight = "Poppins-Light"
+        static let poppinsLightItalic = "Poppins-LightItalic"
         
     }
 }

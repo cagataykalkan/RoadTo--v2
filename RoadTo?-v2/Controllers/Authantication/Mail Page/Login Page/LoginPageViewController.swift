@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class LoginPageViewController: UIViewController {
-
-    //IBOutlets
     
+    //IBOutlets
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var welcomeLabel2: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
@@ -22,15 +24,17 @@ class LoginPageViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     
+    var keyboardViewModel: KeyboardViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupUI()
-
-
+        
+        keyboardViewModel = KeyboardViewModel(viewController: self)
+        keyboardViewModel.addTapGestureToDismissKeyboard()
     }
-
+    
     
     private func setupUI() {
         
@@ -62,7 +66,28 @@ class LoginPageViewController: UIViewController {
         registerButton.layer.borderWidth = 2
         registerButton.layer.borderColor = UIColor.black.cgColor
     }
-
+    
+    @IBAction func registerButtonPressed(_ sender: Any) {
+        let destinationVC = RegisterPageViewController()
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    
+    
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        if let email = emailTextfield.text , let password = passwordTextfield.text{
+            Auth.auth().signIn(withEmail: email, password: password) {authResult, error in
+                if let e = error{
+                    print(e.localizedDescription)
+                }else{
+                    let destinationVC = WelcomeViewController()
+                    self.navigationController?.pushViewController(destinationVC, animated: true)
+                }
+                
+            }
+            
+        }
+    }
+    
+    
    
-
 }
