@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCWr40WlmWTR_uFvt9G9vI2Ooet_nbHJo4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>720048431591</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>kalkan.RoadTo--v2</string>
+	<key>PROJECT_ID</key>
+	<string>roadto-v2-e8d54</string>
+	<key>STORAGE_BUCKET</key>
+	<string>roadto-v2-e8d54.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:720048431591:ios:140cb358f44169ee019d42</string>
+</dict>
+</plist>
