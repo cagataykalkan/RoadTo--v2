@@ -1,5 +1,5 @@
 //
-//  PlaceDetails2ViewController.swift
+//  RoutesViewController.swift
 //  RoadTo?-v2
 //
 //  Created by Çağatay KALKAN on 29.11.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlaceDetails2ViewController: UIViewController {
+class RoutesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
