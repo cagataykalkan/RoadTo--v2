@@ -14,7 +14,9 @@ class RoutesViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     
     var likedPlaces: [PlaceData] = []
-    let startCoordinate = Coordinate(x: 0, y: 0) // Başlangıç koordinatları örnek olarak 0,0
+    
+    
+    let startCoordinate = Coordinate(x: 37.7878351933132, y: 29.019297774705304) // Başlangıç koordinatları örnek olarak 0,0
     
     // sortedRoute özelliğini opsiyonel olmayan bir dizi olarak başlatıyoruz
     var sortedRoute: [Coordinate] = []
@@ -29,21 +31,27 @@ class RoutesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-                
+        
         // TableView ayarları
         setupTableView()
         
         routesTableView.reloadData()
         
         // likedPlaces dizisinden koordinatları almak için map fonksiyonu kullanılıyor
-        let coordinates = likedPlaces.map { place in
-            return Coordinate(x: Double(place.Xcoordinate) ?? 0.0, y: Double(place.Ycoordinate) ?? 0.0)
+        let coordinates = likedPlaces.compactMap { place in
+            if let x = Double(place.Xcoordinate), let y = Double(place.Ycoordinate) {
+                return Coordinate(x: x, y: y)
+            } else {
+                print("Geçersiz koordinatlar: \(place.Xcoordinate), \(place.Ycoordinate)")
+                return nil
+            }
         }
+  
         
         // Başlangıç noktasından itibaren en yakın mekanları sıralıyoruz
         sortedRoute = sortByNearestNeighbor(start: startCoordinate, coordinates: coordinates)
@@ -58,7 +66,7 @@ class RoutesViewController: UIViewController {
         // Sıralanan rota çıktısını konsola yazdırıyoruz
         printRoute(start: startCoordinate, sortedRoute: sortedRoute)
         
- 
+        
     }
     
     
@@ -76,7 +84,7 @@ class RoutesViewController: UIViewController {
         startButton.backgroundColor = .appPurple
         startButton.titleLabel?.font = UIFont(name: K.Fonts.poppinsSemiBold, size: 22 )
     }
-
+    
     
     // İki nokta arasındaki mesafeyi hesaplayan fonksiyon
     func calculateDistance(from start: Coordinate, to point: Coordinate) -> Double {
@@ -90,11 +98,9 @@ class RoutesViewController: UIViewController {
         var visited: [Coordinate] = []
         var remaining = coordinates
         var current = start
-
+        
         while !remaining.isEmpty {
-            print("Kalan noktalar: \(remaining)")
             if let nearest = remaining.min(by: { calculateDistance(from: current, to: $0) < calculateDistance(from: current, to: $1) }) {
-                print("En yakın nokta: \(nearest)")
                 visited.append(nearest)
                 remaining.removeAll { $0.x == nearest.x && $0.y == nearest.y }
                 current = nearest
@@ -113,6 +119,14 @@ class RoutesViewController: UIViewController {
     
     
     @IBAction func startButtonPressed(_ sender: Any) {
+        let vc = MapViewController()
+        vc.sortedRoute = sortedRoute
+        navigationController?.pushViewController(vc, animated: true)
+        print(sortedRoute[0].id)
+        print(sortedRoute[1].id)
+        print(sortedRoute[2].id)
+        print(sortedRoute[3].id)
+        print(sortedRoute[4].id)
     }
     
     

@@ -4,15 +4,18 @@
 //
 //  Created by Çağatay KALKAN on 29.11.2024.
 //
+import MapKit
 
-class Coordinate {
-    var x: Double = 0.0
-    var y: Double = 0.0
-        
-    init(x: Double, y: Double) {
-        self.x = x
-        self.y = y
-    }
+
+
+import MapKit
+
+struct Coordinate: Identifiable, Equatable {
+    var id = UUID()
+    var x: Double
+    var y: Double
     
-
+    static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
+        return lhs.x == rhs.x && lhs.y == rhs.y
+    }
 }
