@@ -12,6 +12,9 @@ class PlacesViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var placesTableView: UITableView!
     
+    var allPlaces: [PlaceData] = []  // Tüm yerler
+    var filteredPlaces: [PlaceData] = []  // Filtrelenmiş yerler
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,16 +23,18 @@ class PlacesViewController: UIViewController {
         
         // Veriyi bir kere çek
         DataManager.shared.fetchPlacesFromFirestore { [weak self] success in
-            if success {
-                // Tabloyu güncelle
-                DispatchQueue.main.async {
-                    self?.placesTableView.reloadData()
+                    if success {
+                        // Veriyi sakla ve filtreleme yap
+                        self?.allPlaces = DataManager.shared.places // Tüm yerler alındı
+                        self?.filteredPlaces = self?.allPlaces ?? []  // Başlangıçta tüm yerleri göster
+                        DispatchQueue.main.async {
+                            self?.placesTableView.reloadData()
+                        }
+                    } else {
+                        print("Veri çekme başarısız.")
+                    }
                 }
-            } else {
-                print("Veri çekme başarısız.")
-            }
-        }
-        
+
     }
     
     

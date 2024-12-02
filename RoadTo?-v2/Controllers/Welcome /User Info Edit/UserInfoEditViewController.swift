@@ -142,6 +142,9 @@ class UserInfoEditViewController: UIViewController {
                 }
             }
         
+        
+        let vc = WelcomeViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

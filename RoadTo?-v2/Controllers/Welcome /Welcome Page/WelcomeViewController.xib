@@ -31,10 +31,10 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6k-Fs-b4a">
-                    <rect key="frame" x="342" y="59" width="35" height="35"/>
+                    <rect key="frame" x="332" y="59" width="45" height="45"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="35" id="KtR-n3-4pb"/>
-                        <constraint firstAttribute="height" constant="35" id="oAR-Sn-gqT"/>
+                        <constraint firstAttribute="width" constant="45" id="KtR-n3-4pb"/>
+                        <constraint firstAttribute="height" constant="45" id="oAR-Sn-gqT"/>
                     </constraints>
                     <color key="tintColor" name="AppPurple"/>
                     <state key="normal" title="Button"/>
@@ -46,7 +46,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📍Denizli Türkiye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRT-PC-2lz">
-                    <rect key="frame" x="16" y="59" width="310" height="21"/>
+                    <rect key="frame" x="16" y="59" width="300" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -68,7 +68,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcK-vu-CxN">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hoşgeldiniz" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcK-vu-CxN">
                     <rect key="frame" x="16" y="241" width="361" height="20.333333333333314"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>

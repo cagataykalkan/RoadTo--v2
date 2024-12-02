@@ -64,17 +64,17 @@ struct MapLocationDetailsSwiftUIView: View {
                         .cornerRadius(12)
                 }
                 
-                Button{
-                    getDirections = true
-                    show = false
-                }label: {
-                    Text("Yol tarifi al")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(width: 170, height: 48)
-                        .background(.blue)
-                        .cornerRadius(12)
-                }
+//                Button{
+//                    getDirections = true
+//                    show = false
+//                }label: {
+//                    Text("Yol tarifi al")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .frame(width: 170, height: 48)
+//                        .background(.blue)
+//                        .cornerRadius(12)
+//                }
             }
         }
         .onAppear {

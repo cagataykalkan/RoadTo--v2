@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class RoutesViewController: UIViewController {
+class RoutesViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var routesTableView: UITableView!
     
@@ -15,8 +16,12 @@ class RoutesViewController: UIViewController {
     
     var likedPlaces: [PlaceData] = []
     
+    var locationManager: CLLocationManager!
+    var userLocation: CLLocationCoordinate2D?
     
-    let startCoordinate = Coordinate(x: 37.7878351933132, y: 29.019297774705304) // Başlangıç koordinatları örnek olarak 0,0
+    
+    
+    var startCoordinate = Coordinate(x: 0.0,y: 0.0)
     
     // sortedRoute özelliğini opsiyonel olmayan bir dizi olarak başlatıyoruz
     var sortedRoute: [Coordinate] = []
@@ -35,13 +40,37 @@ class RoutesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getLocation()
         setupUI()
-        
-        // TableView ayarları
+        createRoute()
         setupTableView()
-        
         routesTableView.reloadData()
+    }
+    
+    func getLocation(){
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         
+        // Konum izni istemek
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestWhenInUseAuthorization()  // Kullanıcıdan konum izni istiyoruz
+            locationManager.startUpdatingLocation()         // Konum güncellemelerini başlatıyoruz
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let newLocation = locations.last else { return }
+        userLocation = newLocation.coordinate
+        
+        // Konum bilgilerini konsola yazdırıyoruz
+        print("Kullanıcı Konumu: \(userLocation?.latitude ?? 0), \(userLocation?.longitude ?? 0)")
+        startCoordinate.x = userLocation?.latitude ?? 0
+        startCoordinate.y = userLocation?.longitude ?? 0
+    }
+    
+    
+    func createRoute() {
         // likedPlaces dizisinden koordinatları almak için map fonksiyonu kullanılıyor
         let coordinates = likedPlaces.compactMap { place in
             if let x = Double(place.Xcoordinate), let y = Double(place.Ycoordinate) {
@@ -51,7 +80,7 @@ class RoutesViewController: UIViewController {
                 return nil
             }
         }
-  
+        
         
         // Başlangıç noktasından itibaren en yakın mekanları sıralıyoruz
         sortedRoute = sortByNearestNeighbor(start: startCoordinate, coordinates: coordinates)
@@ -66,9 +95,7 @@ class RoutesViewController: UIViewController {
         // Sıralanan rota çıktısını konsola yazdırıyoruz
         printRoute(start: startCoordinate, sortedRoute: sortedRoute)
         
-        
     }
-    
     
     func setupUI() {
         let titleLabel = UILabel()

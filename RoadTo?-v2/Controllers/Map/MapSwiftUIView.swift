@@ -16,9 +16,7 @@ struct MapSwiftUIView: View {
     @State private var mapSelection: MKMapItem?
     @State private var showDetails: Bool = false
     @State private var getDirections = false
-    @State private var routeDisplaying = false
-    @State private var route: MKRoute?
-    @State private var routeDestination: MKMapItem?
+    
     
     var mapItems: [MKMapItem] {
         sortedRoute.enumerated().map { index, location in
@@ -48,29 +46,9 @@ struct MapSwiftUIView: View {
                 
                 // Rota üzerindeki diğer duraklar
                 ForEach(mapItems, id: \.self) { mapItem in
-                    if routeDisplaying {
-                        if mapItem == routeDestination {
-                            if let coordinate = mapItem.placemark.location?.coordinate {
-                                Marker(mapItem.name ?? "Durak", coordinate: coordinate)
-                            }
-                        }
-                    } else {
-                        if let coordinate = mapItem.placemark.location?.coordinate {
-                            Marker(mapItem.name ?? "Durak", coordinate: coordinate)
-                        }
+                    if let coordinate = mapItem.placemark.location?.coordinate {
+                        Marker(mapItem.name ?? "Durak", coordinate: coordinate)
                     }
-                }
-                
-                if let route {
-                    MapPolygon(route.polyline)
-                        .stroke(.blue, lineWidth: 7)
-                }
-            }
-        }
-        .onChange(of: getDirections) { oldValue, newValue in
-            if newValue == true {
-                Task {
-                    await fetchRoute()
                 }
             }
         }
@@ -89,29 +67,6 @@ struct MapSwiftUIView: View {
             MapCompass()
             MapUserLocationButton()
             MapPitchToggle()
-        }
-    }
-}
-
-extension MapSwiftUIView {
-    func fetchRoute() async {
-        if let mapSelection {
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: .init(coordinate: .myLocation))
-            request.destination = mapSelection
-            
-            let result = try? await MKDirections(request: request).calculate()
-            route = result?.routes.first
-            routeDestination = mapSelection
-            
-            withAnimation(.snappy) {
-                routeDisplaying = true
-                showDetails = false
-                
-                if let rect = route?.polyline.boundingMapRect, routeDisplaying {
-                    cameraPosition = .rect(rect)
-                }
-            }
         }
     }
 }
