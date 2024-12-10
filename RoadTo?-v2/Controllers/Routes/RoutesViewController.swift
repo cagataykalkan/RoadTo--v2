@@ -149,12 +149,13 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
         let vc = MapViewController()
         vc.sortedRoute = sortedRoute
         navigationController?.pushViewController(vc, animated: true)
-        print(sortedRoute[0].id)
-        print(sortedRoute[1].id)
-        print(sortedRoute[2].id)
-        print(sortedRoute[3].id)
-        print(sortedRoute[4].id)
+//        print(sortedRoute[0].id)
+//        print(sortedRoute[1].id)
+//        print(sortedRoute[2].id)
+//        print(sortedRoute[3].id)
+//        print(sortedRoute[4].id)
     }
     
     
 }
+ 
