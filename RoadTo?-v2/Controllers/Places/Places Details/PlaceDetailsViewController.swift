@@ -9,6 +9,9 @@ import UIKit
 
 class PlaceDetailsViewController: UIViewController {
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    
     @IBOutlet weak var likeButton: UIButton!
     let likeButtonImages = ["unlikedIcon","likedIcon"]
     var likeButtonImagesIndex = 0
@@ -50,13 +53,38 @@ class PlaceDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupScrollView()
         
         setupData()
         
         setupUI()
-        
     }
-    
+
+    private func setupScrollView() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+
+        // ScrollView ve ContentView bağlantıları
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+
+        // ContentView'un minimum yüksekliği
+        contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor).isActive = true
+
+        // placeExplanationLabel bağlantıları
+        NSLayoutConstraint.activate([
+            placeExplanationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            placeExplanationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            placeExplanationLabel.topAnchor.constraint(equalTo: suitabilityForFamilyCheck.bottomAnchor, constant: 16),
+            placeExplanationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+        ])
+    }
+
     
     
     private func setupData() {
