@@ -19,11 +19,11 @@ struct MapSwiftUIView: View {
     
     
     var mapItems: [MKMapItem] {
-        sortedRoute.enumerated().map { index, location in
-            location.toMapItem(name: "\(index + 1). Durak")
+        sortedRoute.compactMap { location in
+            location.toMapItem(name: location.name ?? "Bilinmeyen Durak")
         }
     }
-    
+
     var body: some View {
         ZStack {
             Map(position: $cameraPosition, selection: $mapSelection) {
@@ -45,9 +45,9 @@ struct MapSwiftUIView: View {
                 }
                 
                 // Rota üzerindeki diğer duraklar
-                ForEach(mapItems, id: \.self) { mapItem in
+                ForEach(Array(mapItems.enumerated()), id: \.1) { index, mapItem in
                     if let coordinate = mapItem.placemark.location?.coordinate {
-                        Marker(mapItem.name ?? "Durak", coordinate: coordinate)
+                        Marker(mapItem.name ?? "Durak", systemImage: "\(index + 1).circle.fill", coordinate: coordinate)
                     }
                 }
             }
@@ -79,7 +79,7 @@ extension CLLocationCoordinate2D {
 
 extension MKCoordinateRegion {
     static var myRegion: MKCoordinateRegion {
-        return MKCoordinateRegion(center: .myLocation, latitudinalMeters: 5000, longitudinalMeters: 5000)
+        return MKCoordinateRegion(center: .myLocation, latitudinalMeters: 60000, longitudinalMeters: 40000)
     }
 }
 

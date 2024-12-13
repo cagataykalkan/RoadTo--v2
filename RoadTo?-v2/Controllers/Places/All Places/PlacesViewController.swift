@@ -54,7 +54,7 @@ class PlacesViewController: UIViewController {
         
         self.navigationItem.titleView = titleLabel
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(navBarButtonTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)), style: .plain, target: self, action: #selector(navBarButtonTapped))
     }
     
     @objc private func navBarButtonTapped() {

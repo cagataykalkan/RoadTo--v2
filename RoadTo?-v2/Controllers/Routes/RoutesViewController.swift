@@ -74,13 +74,12 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
         // likedPlaces dizisinden koordinatları almak için map fonksiyonu kullanılıyor
         let coordinates = likedPlaces.compactMap { place in
             if let x = Double(place.Xcoordinate), let y = Double(place.Ycoordinate) {
-                return Coordinate(x: x, y: y)
+                return Coordinate(x: x, y: y, name: place.placeName) // İsim burada ekleniyor
             } else {
                 print("Geçersiz koordinatlar: \(place.Xcoordinate), \(place.Ycoordinate)")
                 return nil
             }
         }
-        
         
         // Başlangıç noktasından itibaren en yakın mekanları sıralıyoruz
         sortedRoute = sortByNearestNeighbor(start: startCoordinate, coordinates: coordinates)
@@ -94,9 +93,8 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
         
         // Sıralanan rota çıktısını konsola yazdırıyoruz
         printRoute(start: startCoordinate, sortedRoute: sortedRoute)
-        
     }
-    
+
     func setupUI() {
         let titleLabel = UILabel()
         titleLabel.text = "Rotanız"
@@ -149,15 +147,7 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
         let vc = MapViewController()
         vc.sortedRoute = sortedRoute
         navigationController?.pushViewController(vc, animated: true)
-<<<<<<< HEAD
-       
-=======
-//        print(sortedRoute[0].id)
-//        print(sortedRoute[1].id)
-//        print(sortedRoute[2].id)
-//        print(sortedRoute[3].id)
-//        print(sortedRoute[4].id)
->>>>>>> main
+
     }
     
     

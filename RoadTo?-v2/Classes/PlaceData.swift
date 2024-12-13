@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 class PlaceData {
     var placeID: String = ""
     var placeName: String = ""
@@ -23,9 +21,11 @@ class PlaceData {
     var timeToSpend: String = ""
     var placeExplanation: String = ""
     var placeCategory: String = ""
+    var placeAdress: String = ""
     
 
-    init(placeID: String, placeName: String, placeImageName: String, Xcoordinate: String, Ycoordinate: String, isLiked: Bool, isSuitableForChild: Bool, isSuitableForFamily: Bool, placeLocationName: String, placeStar: Double, timeToSpend: String, placeExplanation: String, placeCategory: String) {
+    
+    init(placeID: String, placeName: String, placeImageName: String, Xcoordinate: String, Ycoordinate: String, isLiked: Bool, isSuitableForChild: Bool, isSuitableForFamily: Bool, placeLocationName: String, placeStar: Double, timeToSpend: String, placeExplanation: String, placeCategory: String, placeAdress: String) {
         self.placeID = placeID
         self.placeName = placeName
         self.placeImageName = placeImageName
@@ -39,5 +39,18 @@ class PlaceData {
         self.timeToSpend = timeToSpend
         self.placeExplanation = placeExplanation
         self.placeCategory = placeCategory
+        self.placeAdress = placeAdress
     }
 }
+
+
+extension PlaceData {
+    func toCoordinate() -> Coordinate {
+        guard let x = Double(Xcoordinate), let y = Double(Ycoordinate) else {
+            fatalError("Koordinatlar dönüştürülemedi.")
+        }
+        return Coordinate(x: x, y: y, name: placeName) // Firestore'dan gelen adres
+    }
+}
+
+

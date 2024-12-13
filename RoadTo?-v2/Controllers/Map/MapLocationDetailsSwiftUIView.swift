@@ -23,7 +23,7 @@ struct MapLocationDetailsSwiftUIView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Text(mapSelection.placemark.title ?? "")
+                    Text(mapSelection.placemark.title ?? "Adres bilgisi mevcut değil.")
                         .font(.footnote)
                         .foregroundStyle(.gray)
                         .lineLimit(2)
@@ -92,3 +92,4 @@ extension MapLocationDetailsSwiftUIView {
         }
     }
 }
+

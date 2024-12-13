@@ -35,11 +35,11 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLS-6Z-je8">
-                    <rect key="frame" x="0.0" y="-20" width="393" height="852"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLS-6Z-je8">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cOi-CK-PTb">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
+                            <rect key="frame" x="0.0" y="-59" width="393" height="852"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SLU-sd-UYx">
                                     <rect key="frame" x="8" y="8" width="377" height="450"/>
@@ -238,11 +238,12 @@
                         </view>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="cOi-CK-PTb" firstAttribute="width" secondItem="bLS-6Z-je8" secondAttribute="width" id="BeO-Mh-FlK"/>
-                        <constraint firstItem="UBR-Tg-wKN" firstAttribute="bottom" secondItem="cOi-CK-PTb" secondAttribute="bottom" id="b2n-fk-nfM"/>
-                        <constraint firstItem="cOi-CK-PTb" firstAttribute="top" secondItem="bLS-6Z-je8" secondAttribute="top" id="gye-LJ-vU8"/>
-                        <constraint firstAttribute="trailing" secondItem="cOi-CK-PTb" secondAttribute="trailing" id="sJ9-9W-UYm"/>
-                        <constraint firstItem="cOi-CK-PTb" firstAttribute="leading" secondItem="UBR-Tg-wKN" secondAttribute="leading" id="y45-wx-XG5"/>
+                        <constraint firstItem="cOi-CK-PTb" firstAttribute="bottom" secondItem="KeT-er-Iag" secondAttribute="bottom" constant="793" id="1Xu-h5-b0V"/>
+                        <constraint firstItem="KeT-er-Iag" firstAttribute="top" secondItem="cOi-CK-PTb" secondAttribute="top" constant="59" id="77Z-Od-YqA"/>
+                        <constraint firstItem="cOi-CK-PTb" firstAttribute="trailing" secondItem="KeT-er-Iag" secondAttribute="trailing" id="Xql-wH-bw5"/>
+                        <constraint firstItem="cOi-CK-PTb" firstAttribute="width" secondItem="UBR-Tg-wKN" secondAttribute="width" id="bA2-VU-RYN"/>
+                        <constraint firstItem="cOi-CK-PTb" firstAttribute="leading" secondItem="KeT-er-Iag" secondAttribute="leading" id="hJm-d1-sJ0"/>
+                        <constraint firstItem="cOi-CK-PTb" firstAttribute="height" secondItem="UBR-Tg-wKN" secondAttribute="height" priority="250" id="ltF-mh-3h7"/>
                     </constraints>
                     <viewLayoutGuide key="contentLayoutGuide" id="KeT-er-Iag"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="UBR-Tg-wKN"/>
@@ -251,13 +252,12 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="cOi-CK-PTb" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" priority="250" id="0aE-ZA-qaz"/>
                 <constraint firstItem="bLS-6Z-je8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="1U2-IR-WLh"/>
                 <constraint firstItem="bLS-6Z-je8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="DSh-0P-i3c"/>
                 <constraint firstItem="bLS-6Z-je8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Zug-XM-qjX"/>
                 <constraint firstAttribute="bottom" secondItem="bLS-6Z-je8" secondAttribute="bottom" id="ph6-EB-CLr"/>
             </constraints>
-            <point key="canvasLocation" x="122.90076335877862" y="19.718309859154932"/>
+            <point key="canvasLocation" x="96.946564885496173" y="114.78873239436621"/>
         </view>
     </objects>
     <resources>
