@@ -21,11 +21,11 @@ class PlaceData {
     var timeToSpend: String = ""
     var placeExplanation: String = ""
     var placeCategory: String = ""
-    var placeAdress: String = ""
+    var placeAddress: String = ""
     
 
     
-    init(placeID: String, placeName: String, placeImageName: String, Xcoordinate: String, Ycoordinate: String, isLiked: Bool, isSuitableForChild: Bool, isSuitableForFamily: Bool, placeLocationName: String, placeStar: Double, timeToSpend: String, placeExplanation: String, placeCategory: String, placeAdress: String) {
+    init(placeID: String, placeName: String, placeImageName: String, Xcoordinate: String, Ycoordinate: String, isLiked: Bool, isSuitableForChild: Bool, isSuitableForFamily: Bool, placeLocationName: String, placeStar: Double, timeToSpend: String, placeExplanation: String, placeCategory: String, placeAddress: String) {
         self.placeID = placeID
         self.placeName = placeName
         self.placeImageName = placeImageName
@@ -39,7 +39,7 @@ class PlaceData {
         self.timeToSpend = timeToSpend
         self.placeExplanation = placeExplanation
         self.placeCategory = placeCategory
-        self.placeAdress = placeAdress
+        self.placeAddress = placeAddress
     }
 }
 

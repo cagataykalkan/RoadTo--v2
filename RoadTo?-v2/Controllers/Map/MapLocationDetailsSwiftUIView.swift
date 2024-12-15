@@ -14,7 +14,7 @@ struct MapLocationDetailsSwiftUIView: View {
     @Binding var show: Bool
     @State private var lookAroundScene: MKLookAroundScene?
     @Binding var getDirections: Bool
-
+    @State private var placeAddress: String?
     var body: some View {
         VStack {
             HStack {
@@ -23,7 +23,7 @@ struct MapLocationDetailsSwiftUIView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Text(mapSelection.placemark.title ?? "Adres bilgisi mevcut değil.")
+                    Text(placeAddress ?? "Adres bilgisi mevcut değil.")
                         .font(.footnote)
                         .foregroundStyle(.gray)
                         .lineLimit(2)
@@ -80,6 +80,12 @@ struct MapLocationDetailsSwiftUIView: View {
         .onAppear {
             fetchLookAroundPreview()
         }
+        .onChange(of: mapSelection) { newValue in
+            fetchPlaceAddress(for: newValue)
+        }
+        .onAppear {
+            fetchPlaceAddress(for: mapSelection)
+        }
     }
 }
 
@@ -91,5 +97,16 @@ extension MapLocationDetailsSwiftUIView {
             lookAroundScene = try? await request.scene
         }
     }
+    
+    func fetchPlaceAddress(for mapItem: MKMapItem) {
+            // DataManager'dan veriyi al ve uygun adresi bul
+            if let selectedPlace = DataManager.shared.places.first(where: { place in
+                place.placeName == mapItem.name
+            }) {
+                placeAddress = selectedPlace.placeAddress
+            } else {
+                placeAddress = "Adres bilgisi mevcut değil."
+            }
+        }
 }
 
