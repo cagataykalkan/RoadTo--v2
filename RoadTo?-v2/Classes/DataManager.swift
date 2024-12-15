@@ -52,6 +52,7 @@ class DataManager {
                 let placeExplanation = data["placeExplanation"] as? String ?? ""
                 let placeCategory = data["placeCategory"] as? String ?? ""
                 let placeAddress = data["placeAddress"] as? String ?? ""
+                let placeFullName = data["placeFullName"] as? String ?? ""
 
 
                 // Modeli oluştur
@@ -69,7 +70,8 @@ class DataManager {
                     timeToSpend: timeToSpend,
                     placeExplanation: placeExplanation,
                     placeCategory: placeCategory,
-                    placeAddress: placeAddress
+                    placeAddress: placeAddress,
+                    placeFullName: placeFullName
                 )
             }
 

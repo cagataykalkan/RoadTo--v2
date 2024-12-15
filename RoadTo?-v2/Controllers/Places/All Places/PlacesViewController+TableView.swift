@@ -30,7 +30,7 @@ extension PlacesViewController: UITableViewDelegate, UITableViewDataSource, UISe
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedPlace = DataManager.shared.places[indexPath.row]  // DataManager'dan alınan veri
+        let selectedPlace = filteredPlaces[indexPath.row]
         let detailVC = PlaceDetailsViewController()
         detailVC.place = selectedPlace // Seçilen yeri yeni ekrana gönder
         navigationController?.pushViewController(detailVC, animated: true)

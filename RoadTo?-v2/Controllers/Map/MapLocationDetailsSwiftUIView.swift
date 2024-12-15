@@ -15,11 +15,14 @@ struct MapLocationDetailsSwiftUIView: View {
     @State private var lookAroundScene: MKLookAroundScene?
     @Binding var getDirections: Bool
     @State private var placeAddress: String?
+    @State private var fullName: String?
+    
+    
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(mapSelection.name ?? "Bilinmeyen Lokasyon")
+                    Text(fullName ?? mapSelection.name ?? "Tam İsim Mevcut Değil")
                         .font(.title2)
                         .fontWeight(.semibold)
                     
@@ -81,10 +84,10 @@ struct MapLocationDetailsSwiftUIView: View {
             fetchLookAroundPreview()
         }
         .onChange(of: mapSelection) { newValue in
-            fetchPlaceAddress(for: newValue)
+            fetchPlaceDetails(for: newValue)
         }
         .onAppear {
-            fetchPlaceAddress(for: mapSelection)
+            fetchPlaceDetails(for: mapSelection)
         }
     }
 }
@@ -98,15 +101,16 @@ extension MapLocationDetailsSwiftUIView {
         }
     }
     
-    func fetchPlaceAddress(for mapItem: MKMapItem) {
-            // DataManager'dan veriyi al ve uygun adresi bul
-            if let selectedPlace = DataManager.shared.places.first(where: { place in
-                place.placeName == mapItem.name
-            }) {
-                placeAddress = selectedPlace.placeAddress
-            } else {
-                placeAddress = "Adres bilgisi mevcut değil."
-            }
+    func fetchPlaceDetails(for mapItem: MKMapItem) {
+        if let selectedPlace = DataManager.shared.places.first(where: { place in
+            place.placeName == mapItem.name
+        }) {
+            placeAddress = selectedPlace.placeAddress
+            // Tam isim veya diğer detaylar
+            fullName = selectedPlace.placeFullName
+        } else {
+            placeAddress = "Adres bilgisi mevcut değil."
         }
+    }
 }
 

@@ -21,11 +21,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YNd-Eg-yxU">
-                    <rect key="frame" x="0.0" y="111" width="393" height="741"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFN-Z2-TDJ">
-                    <rect key="frame" x="110" y="67" width="173" height="60"/>
+                    <rect key="frame" x="110" y="768" width="173" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="V12-3b-nqP"/>
                     </constraints>
@@ -39,14 +39,13 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="YNd-Eg-yxU" secondAttribute="bottom" id="8PY-VN-gJa"/>
-                <constraint firstItem="NFN-Z2-TDJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="959-6M-KZh"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NFN-Z2-TDJ" secondAttribute="trailing" constant="110" id="Jp0-Jo-QQa"/>
-                <constraint firstItem="NFN-Z2-TDJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="V5D-od-cgg"/>
+                <constraint firstAttribute="bottom" secondItem="YNd-Eg-yxU" secondAttribute="bottom" id="Khh-E7-KCp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YNd-Eg-yxU" secondAttribute="trailing" id="X9n-Eg-r6J"/>
+                <constraint firstAttribute="bottom" secondItem="NFN-Z2-TDJ" secondAttribute="bottom" constant="24" id="d16-t3-5lS"/>
                 <constraint firstItem="YNd-Eg-yxU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dcd-aD-x1K"/>
                 <constraint firstItem="NFN-Z2-TDJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="110" id="isP-Ob-3SY"/>
-                <constraint firstItem="YNd-Eg-yxU" firstAttribute="firstBaseline" secondItem="NFN-Z2-TDJ" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="zUv-RL-hJY"/>
+                <constraint firstItem="YNd-Eg-yxU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wCo-Fa-aEY"/>
             </constraints>
             <point key="canvasLocation" x="301.52671755725191" y="336.61971830985919"/>
         </view>

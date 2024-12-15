@@ -9,15 +9,15 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-
 class WelcomeViewController: UIViewController {
 
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    
     @IBOutlet weak var welcomeLabel2: UILabel!
-    
     @IBOutlet weak var nextButton: UIButton!
+    
+    var locationService: LocationService?
+    var cityAndDistrict: String = "Konum bilgisi alınıyor..."
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +34,24 @@ class WelcomeViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         
         setupUI()
+        getLocation()
+    }
+    
+    func getLocation() {
+        locationService = LocationService()
+        
+        locationService?.onCityUpdate = { [weak self] cityAndDistrict in
+            DispatchQueue.main.async {
+                self?.cityAndDistrict = cityAndDistrict
+                self?.locationLabel.text = "📍 \(cityAndDistrict)"
+            }
+        }
+        
+        locationService?.onLocationUpdate = { location in
+            print("Kullanıcı konumu: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+        }
+        
+        locationService?.startUpdatingLocation()
     }
 
     
@@ -45,7 +63,7 @@ class WelcomeViewController: UIViewController {
         nextButton.tintColor = UIColor(named: K.BrandColors.lightPurple)
         nextButton.titleLabel?.font = UIFont(name: K.Fonts.poppinsBold, size: 22)
         
-        locationLabel.font = UIFont(name: K.Fonts.poppinsLightItalic, size: 14)
+        locationLabel.font = UIFont(name: K.Fonts.poppinsLightItalic, size: 18)
         
         
         welcomeLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
@@ -56,7 +74,13 @@ class WelcomeViewController: UIViewController {
                         self.welcomeLabel.text = "Hoşgeldiniz,"
                     }
                 }
+        welcomeLabel.textColor = UIColor(named: K.BrandColors.black2)
+        
         welcomeLabel2.font = UIFont(name: K.Fonts.poppinsBlack, size: 24)
+        welcomeLabel2.textColor = UIColor(named: K.BrandColors.black)
+        
+        locationLabel.text = "📍\(cityAndDistrict)"
+        locationLabel.textColor = UIColor(named: K.BrandColors.black3)
         
         
     }
@@ -85,6 +109,7 @@ class WelcomeViewController: UIViewController {
     
     @IBAction func nextButtonPressed(_ sender: Any) {
         let vc = PlacesViewController()
+        vc.userLocation = self.locationService?.currentLocation
         navigationController?.pushViewController(vc, animated: true)
     }
     

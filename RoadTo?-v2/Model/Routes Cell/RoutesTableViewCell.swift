@@ -24,20 +24,22 @@ class RoutesTableViewCell: UITableViewCell {
     func setupUI() {
         numberLabel.font = UIFont(name: K.Fonts.poppinsMedium, size:40 )
         numberLabel.textColor = UIColor(named: K.BrandColors.black2)
-        placeNameLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 32)
+        placeNameLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 24)
         placeNameLabel.textColor = UIColor(named: K.BrandColors.black2)
-        placeCategory.font = UIFont(name: K.Fonts.poppinsRegular, size: 18)
+        placeCategory.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         placeCategory.textColor = UIColor(named: K.BrandColors.black2)
 
-        
+        placeNameLabel.numberOfLines = 0
+        placeCategory.numberOfLines = 0
+
         backView.backgroundColor = UIColor(named: K.BrandColors.lightPurple)
         backView.addCornerRadius(30)
     }
     
     func configure(with place: PlaceData, number: Int) {
         numberLabel.text = "\(number)"
-        placeNameLabel.text = place.placeName
-        placeCategory.text = place.placeCategory // Mekanın kategorisini gösterecek
+        placeNameLabel.text = place.placeFullName
+        placeCategory.text = place.placeCategory
     }
 
 

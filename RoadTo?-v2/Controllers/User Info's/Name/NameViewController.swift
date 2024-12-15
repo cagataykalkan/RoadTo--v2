@@ -35,9 +35,11 @@ class NameViewController: UIViewController {
         nameQuestionLabel.text = "Adınızı giriniz."
         nameQuestionLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
         nameTextField.placeholder = "Adınız"
+        
         button.setTitle("Devam et", for: .normal)
-        button.backgroundColor = .black
-        button.tintColor = .white
+        button.backgroundColor = UIColor(named: K.BrandColors.darkModeBlack)
+        button.tintColor = UIColor(named: K.BrandColors.darkModeWhite)
+
         button.layer.cornerRadius = 20
     }
     

@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Konum lazım </string>
+	<string>Konumunuza erişmek için izninize ihtiyacımız var.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Arka planda konumunuzu izlemek için izninize ihtiyacımız var.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Uygulama açıkken veya arka plandayken konumunuza erişmek için izninize ihtiyacımız var.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Black.ttf</string>
@@ -25,6 +29,8 @@
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-ThinItalic.ttf</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>RoadTo?</string>
 	<key>UIMainStoryboardFile</key>
 	<string></string>
 </dict>

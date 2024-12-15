@@ -9,14 +9,13 @@ import SwiftUI
 import MapKit
 
 struct MapSwiftUIView: View {
-    
     var sortedRoute: [Coordinate]
+    var userLocation: Coordinate
     
-    @State private var cameraPosition: MapCameraPosition = .region(.myRegion)
+    @State private var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion.myRegion(for: .init(x: 0, y: 0)))
     @State private var mapSelection: MKMapItem?
     @State private var showDetails: Bool = false
     @State private var getDirections = false
-    
     
     var mapItems: [MKMapItem] {
         sortedRoute.compactMap { location in
@@ -28,7 +27,7 @@ struct MapSwiftUIView: View {
         ZStack {
             Map(position: $cameraPosition, selection: $mapSelection) {
                 // Başlangıç konumunu işaretleyelim
-                Annotation("Başlangıç", coordinate: .myLocation) {
+                Annotation("Başlangıç", coordinate: userLocation.toCLLocationCoordinate2D()) {
                     ZStack {
                         Circle()
                             .frame(width: 32, height: 32)
@@ -68,18 +67,19 @@ struct MapSwiftUIView: View {
             MapUserLocationButton()
             MapPitchToggle()
         }
-    }
-}
-
-extension CLLocationCoordinate2D {
-    static var myLocation: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: 37.787810885358496, longitude: 29.019427994152355)
+        .onAppear {
+            cameraPosition = .region(MKCoordinateRegion.myRegion(for: userLocation))
+        }
     }
 }
 
 extension MKCoordinateRegion {
-    static var myRegion: MKCoordinateRegion {
-        return MKCoordinateRegion(center: .myLocation, latitudinalMeters: 60000, longitudinalMeters: 40000)
+    static func myRegion(for userLocation: Coordinate) -> MKCoordinateRegion {
+        return MKCoordinateRegion(
+            center: userLocation.toCLLocationCoordinate2D(),
+            latitudinalMeters: 30000,
+            longitudinalMeters: 30000
+        )
     }
 }
 
@@ -91,4 +91,9 @@ extension Coordinate {
         mapItem.name = name
         return mapItem
     }
+    
+    func toCLLocationCoordinate2D() -> CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: x, longitude: y)
+    }
 }
+

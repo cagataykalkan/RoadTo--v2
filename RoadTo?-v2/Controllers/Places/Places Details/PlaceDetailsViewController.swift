@@ -92,7 +92,7 @@ class PlaceDetailsViewController: UIViewController {
         
         // Mekan bilgilerini ekrana yerleştir
         placeImage.image = UIImage(named: currentPlace.placeImageName)
-        placeNameLabel.text = currentPlace.placeName
+        placeNameLabel.text = currentPlace.placeFullName
         placeStarLabel.text = String(currentPlace.placeStar)
         placeLocationLabel.text = currentPlace.placeLocationName
         valueOfTimeToSpend.text = "\(currentPlace.timeToSpend) Dakika"
@@ -141,6 +141,11 @@ class PlaceDetailsViewController: UIViewController {
         timeToSpend.layer.masksToBounds = true
         valueOfTimeToSpend.font = UIFont(name: K.Fonts.poppinsRegular, size: 14)
         valueOfTimeToSpend.textColor = UIColor(named: K.BrandColors.grey)
+        
+        contentView.backgroundColor = UIColor(named: K.BrandColors.darkModeWhite)
+        
+        placeExplanationLabel.textColor = UIColor(named: K.BrandColors.darkModeBlack)
+        placeExplanationLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 14)
     }
     
     

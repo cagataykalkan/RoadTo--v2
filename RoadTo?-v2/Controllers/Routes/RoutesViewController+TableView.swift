@@ -17,8 +17,9 @@ extension RoutesViewController: UITableViewDelegate,UITableViewDataSource {
         
         routesTableView.backgroundColor = UIColor(named: K.BrandColors.purple)
         routesTableView.addCornerRadius(30)
-        routesTableView.rowHeight = 90
-
+        
+        routesTableView.rowHeight = UITableView.automaticDimension
+        routesTableView.estimatedRowHeight = 125
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

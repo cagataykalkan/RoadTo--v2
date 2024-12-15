@@ -8,23 +8,16 @@
 import UIKit
 import CoreLocation
 
-class RoutesViewController: UIViewController, CLLocationManagerDelegate {
+class RoutesViewController: UIViewController {
     
     @IBOutlet weak var routesTableView: UITableView!
-    
     @IBOutlet weak var startButton: UIButton!
     
     var likedPlaces: [PlaceData] = []
-    
-    var locationManager: CLLocationManager!
-    var userLocation: CLLocationCoordinate2D?
-    
-    
-    
     var startCoordinate = Coordinate(x: 0.0,y: 0.0)
-    
-    // sortedRoute özelliğini opsiyonel olmayan bir dizi olarak başlatıyoruz
     var sortedRoute: [Coordinate] = []
+    
+    var locationService: LocationService?
     
     // LikedPlacesVC'den gelen likedPlaces dizisini alan initializer
     init(likedPlaces: [PlaceData]) {
@@ -40,33 +33,31 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getLocation()
+        setupLocationService()
         setupUI()
-        createRoute()
         setupTableView()
         routesTableView.reloadData()
     }
     
-    func getLocation(){
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        
-        // Konum izni istemek
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestWhenInUseAuthorization()  // Kullanıcıdan konum izni istiyoruz
-            locationManager.startUpdatingLocation()         // Konum güncellemelerini başlatıyoruz
-        }
-    }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let newLocation = locations.last else { return }
-        userLocation = newLocation.coordinate
-        
-        // Konum bilgilerini konsola yazdırıyoruz
-        print("Kullanıcı Konumu: \(userLocation?.latitude ?? 0), \(userLocation?.longitude ?? 0)")
-        startCoordinate.x = userLocation?.latitude ?? 0
-        startCoordinate.y = userLocation?.longitude ?? 0
+    func setupLocationService() {
+        // LocationService'i başlat
+        locationService = LocationService()
+        locationService?.onLocationUpdate = { [weak self] location in
+            guard let self = self else { return }
+            
+            // Kullanıcının konumunu başlangıç koordinatı olarak ayarla
+            self.startCoordinate = Coordinate(x: location.coordinate.latitude, y: location.coordinate.longitude)
+            
+            print("Başlangıç noktası ayarlandı: (\(self.startCoordinate.x), \(self.startCoordinate.y))")
+            
+            // Rota oluştur ve tabloyu güncelle
+            self.createRoute()
+            DispatchQueue.main.async {
+                self.routesTableView.reloadData()
+            }
+        }
+        locationService?.startUpdatingLocation()
     }
     
     
@@ -94,7 +85,7 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
         // Sıralanan rota çıktısını konsola yazdırıyoruz
         printRoute(start: startCoordinate, sortedRoute: sortedRoute)
     }
-
+    
     func setupUI() {
         let titleLabel = UILabel()
         titleLabel.text = "Rotanız"
@@ -146,10 +137,11 @@ class RoutesViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func startButtonPressed(_ sender: Any) {
         let vc = MapViewController()
         vc.sortedRoute = sortedRoute
+        vc.startCoordinate = startCoordinate
         navigationController?.pushViewController(vc, animated: true)
-
+        
     }
     
     
 }
- 
+

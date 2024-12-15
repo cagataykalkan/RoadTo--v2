@@ -22,6 +22,9 @@ struct K {   // K = Constants
         static let lightPurple = "AppLightPurple"
         static let purple = "AppPurple"
         static let yellow = "AppYellow"
+        static let darkModeBlack = "DMLM-black-white"
+        static let darkModeWhite = "DMLM-white-black"
+        static let darkModeWhite_Grey = "DMLM-white-grey"
     }
     
     struct Fonts {

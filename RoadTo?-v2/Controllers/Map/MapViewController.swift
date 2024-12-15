@@ -11,8 +11,9 @@ import SwiftUI
 class MapViewController: UIViewController {
     
     var sortedRoute: [Coordinate] = []
+    var startCoordinate = Coordinate(x: 0.0,y: 0.0)
     
-    var startCoordinate: Coordinate = Coordinate(x: 37.787810885358496, y: 29.019427994152355) // Başlangıç
+    //var startCoordinate: Coordinate = Coordinate(x: 37.787810885358496, y: 29.019427994152355) // Başlangıç
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,7 @@ class MapViewController: UIViewController {
         //navigationItem.hidesBackButton = true
         
         // SwiftUI View'i bir UIHostingController'a sar
-        let swiftUIView = MapSwiftUIView(sortedRoute: sortedRoute)
+        let swiftUIView = MapSwiftUIView(sortedRoute: sortedRoute, userLocation: startCoordinate)
 //        let swiftUIView = MapSwiftUIView()
         let hostingController = UIHostingController(rootView: swiftUIView)
         

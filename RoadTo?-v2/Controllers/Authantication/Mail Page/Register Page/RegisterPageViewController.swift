@@ -35,19 +35,19 @@ class RegisterPageViewController: UIViewController {
     
     private func setupUI(){
         welcomeLabel.text = "RoadTo? üyesi olun."
-        welcomeLabel.textColor = UIColor(named: K.BrandColors.black3)
+        welcomeLabel.textColor = UIColor(named: K.BrandColors.darkModeBlack)
         welcomeLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
         
         emailLabel.text = "E-posta adresi"
-        emailLabel.textColor = UIColor(named: K.BrandColors.black2)
+        emailLabel.textColor = UIColor(named: K.BrandColors.darkModeBlack)
         emailLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         
         passwordLabel.text = "Parola"
-        passwordLabel.textColor = UIColor(named: K.BrandColors.black2)
+        passwordLabel.textColor = UIColor(named: K.BrandColors.darkModeBlack)
         passwordLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         
-        registerButton.backgroundColor = .black
-        registerButton.tintColor = .white
+        registerButton.backgroundColor = UIColor(named: K.BrandColors.darkModeBlack)
+        registerButton.tintColor = UIColor(named: K.BrandColors.darkModeWhite)
         registerButton.titleLabel?.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         registerButton.layer.cornerRadius = 20
         

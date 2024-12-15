@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import CoreLocation
 
 class PlacesViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
@@ -14,6 +15,7 @@ class PlacesViewController: UIViewController {
     
     var allPlaces: [PlaceData] = []  // Tüm yerler
     var filteredPlaces: [PlaceData] = []  // Filtrelenmiş yerler
+    var userLocation: CLLocation?  // Kullanıcı konumu
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,23 +23,49 @@ class PlacesViewController: UIViewController {
         setupUI()
         setupTableView()
         
-        // Veriyi bir kere çek
+        
         DataManager.shared.fetchPlacesFromFirestore { [weak self] success in
-                    if success {
-                        // Veriyi sakla ve filtreleme yap
-                        self?.allPlaces = DataManager.shared.places // Tüm yerler alındı
-                        self?.filteredPlaces = self?.allPlaces ?? []  // Başlangıçta tüm yerleri göster
-                        DispatchQueue.main.async {
-                            self?.placesTableView.reloadData()
-                        }
-                    } else {
-                        print("Veri çekme başarısız.")
-                    }
+            if success {
+                self?.allPlaces = DataManager.shared.places
+                self?.filteredPlaces = self?.allPlaces ?? []
+                
+                if let location = self?.userLocation {
+                    self?.sortPlacesByProximity(to: location)
+                }
+                
+                DispatchQueue.main.async {
+                    self?.placesTableView.reloadData()
+                }
+            } else {
+                print("Veri çekme başarısız.")
+            }
+        }
+    }
+
+    func sortPlacesByProximity(to location: CLLocation) {
+            let sortedPlaces = allPlaces.sorted { place1, place2 in
+                guard
+                    let latitude1 = Double(place1.Xcoordinate),
+                    let longitude1 = Double(place1.Ycoordinate),
+                    let latitude2 = Double(place2.Xcoordinate),
+                    let longitude2 = Double(place2.Ycoordinate)
+                else {
+                    return false
                 }
 
-    }
-    
-    
+                let location1 = CLLocation(latitude: latitude1, longitude: longitude1)
+                let location2 = CLLocation(latitude: latitude2, longitude: longitude2)
+
+                let distance1 = location.distance(from: location1)
+                let distance2 = location.distance(from: location2)
+
+                return distance1 < distance2
+            }
+
+            allPlaces = sortedPlaces
+            filteredPlaces = allPlaces
+        }
+
     
     func setupUI() {
         

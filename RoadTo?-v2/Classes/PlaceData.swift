@@ -22,10 +22,12 @@ class PlaceData {
     var placeExplanation: String = ""
     var placeCategory: String = ""
     var placeAddress: String = ""
+    var placeFullName: String = ""
+
     
 
     
-    init(placeID: String, placeName: String, placeImageName: String, Xcoordinate: String, Ycoordinate: String, isLiked: Bool, isSuitableForChild: Bool, isSuitableForFamily: Bool, placeLocationName: String, placeStar: Double, timeToSpend: String, placeExplanation: String, placeCategory: String, placeAddress: String) {
+    init(placeID: String, placeName: String, placeImageName: String, Xcoordinate: String, Ycoordinate: String, isLiked: Bool, isSuitableForChild: Bool, isSuitableForFamily: Bool, placeLocationName: String, placeStar: Double, timeToSpend: String, placeExplanation: String, placeCategory: String, placeAddress: String, placeFullName: String) {
         self.placeID = placeID
         self.placeName = placeName
         self.placeImageName = placeImageName
@@ -40,6 +42,7 @@ class PlaceData {
         self.placeExplanation = placeExplanation
         self.placeCategory = placeCategory
         self.placeAddress = placeAddress
+        self.placeFullName = placeFullName
     }
 }
 

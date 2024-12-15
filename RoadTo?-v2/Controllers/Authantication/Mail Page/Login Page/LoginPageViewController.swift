@@ -39,25 +39,27 @@ class LoginPageViewController: UIViewController {
     private func setupUI() {
         
         welcomeLabel.text = "Sizi tekrar görmek çok güzel,"
-        welcomeLabel.textColor = UIColor(named: K.BrandColors.black3)
+        welcomeLabel.textColor = UIColor.label
         welcomeLabel.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
         
         welcomeLabel2.text = "Hoşgeldiniz."
-        welcomeLabel2.textColor = UIColor(named: K.BrandColors.black3)
+        welcomeLabel2.textColor = UIColor.label
         welcomeLabel2.font = UIFont(name: K.Fonts.poppinsMedium, size: 22)
         
         emailLabel.text = "E-posta adresi"
-        emailLabel.textColor = UIColor(named: K.BrandColors.black2)
+        emailLabel.textColor = UIColor.label
         emailLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         
         passwordLabel.text = "Parola"
-        passwordLabel.textColor = UIColor(named: K.BrandColors.black2)
+        passwordLabel.textColor = UIColor.label
         passwordLabel.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         
         loginButton.backgroundColor = .black
         loginButton.tintColor = .white
         loginButton.titleLabel?.font = UIFont(name: K.Fonts.poppinsRegular, size: 16)
         loginButton.layer.cornerRadius = 20
+        loginButton.layer.borderWidth = 2
+        loginButton.layer.borderColor = UIColor.white.cgColor
         
         registerButton.backgroundColor = .white
         registerButton.tintColor = .black

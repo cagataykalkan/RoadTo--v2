@@ -29,7 +29,7 @@ class PlacesTableViewCell: UITableViewCell {
 
         
         placeName.font = UIFont(name: K.Fonts.poppinsBlack, size: 48)
-        placeName.textColor = UIColor.white
+        placeName.textColor = UIColor(named: K.BrandColors.darkModeWhite_Grey)
     }
     
     func configure(with place: PlaceData) {
