@@ -60,6 +60,9 @@
                                     <color key="tintColor" systemColor="labelColor"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Apple ile devam et "/>
+                                    <connections>
+                                        <action selector="signInWithApplePressed:" destination="-1" eventType="touchUpInside" id="7t2-6n-2uI"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -89,6 +92,9 @@
                                     <color key="tintColor" systemColor="labelColor"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Google ile devam et"/>
+                                    <connections>
+                                        <action selector="signInWithGooglePressed:" destination="-1" eventType="touchUpInside" id="Ts2-dg-2vk"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

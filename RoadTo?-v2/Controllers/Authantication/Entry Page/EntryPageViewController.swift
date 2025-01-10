@@ -73,7 +73,7 @@ class EntryPageViewController: UIViewController {
             // Giriş başarılı
             if let user = authResult?.user {
                 let isAnonymous = user.isAnonymous  // Kullanıcının anonim olup olmadığını kontrol et
-                let uid = user.uid 
+                let uid = user.uid
                 print("Anonim giriş başarılı! UID: \(uid), Anonim: \(isAnonymous)")
                 
                 let vc = WelcomeViewController()
@@ -83,9 +83,49 @@ class EntryPageViewController: UIViewController {
         
     }
     
+    @IBAction func signInWithGooglePressed(_ sender: Any) {
+        
+    }
     
     
-    
-    
-    
+    @IBAction func signInWithApplePressed(_ sender: Any) {
+        // Alttan gelen modal için yeni bir ViewController oluştur
+        let bottomSheet = UIViewController()
+        bottomSheet.view.backgroundColor = UIColor(named: K.BrandColors.darkModeBlack)
+        bottomSheet.view.layer.cornerRadius = 20
+        bottomSheet.view.layer.masksToBounds = true
+        
+        // Mesaj etiketi
+        let messageLabel = UILabel()
+        messageLabel.text = "Şu an Apple ile giriş yapamıyoruz 😔"
+        messageLabel.textAlignment = .center
+        messageLabel.numberOfLines = 0
+        messageLabel.textColor = UIColor(named: K.BrandColors.darkModeWhite)
+        messageLabel.font = UIFont.systemFont(ofSize: 40, weight: .medium)
+        
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        bottomSheet.view.addSubview(messageLabel)
+        
+        // Mesajı ortalamak için kısıtlamalar
+        NSLayoutConstraint.activate([
+            messageLabel.centerXAnchor.constraint(equalTo: bottomSheet.view.centerXAnchor),
+            messageLabel.centerYAnchor.constraint(equalTo: bottomSheet.view.centerYAnchor),
+            messageLabel.leadingAnchor.constraint(equalTo: bottomSheet.view.leadingAnchor, constant: 20),
+            messageLabel.trailingAnchor.constraint(equalTo: bottomSheet.view.trailingAnchor, constant: -20)
+        ])
+        
+        // iOS 15 ve sonrası için sheet ayarları
+        if let sheet = bottomSheet.sheetPresentationController {
+            sheet.detents = [.large()] // Yarı ve tam ekran modları
+            sheet.prefersGrabberVisible = true // Tutamaç görünür olsun
+        }
+        
+        // Modal olarak göster
+        bottomSheet.modalPresentationStyle = .pageSheet
+        present(bottomSheet, animated: true, completion: nil)
+    }
+
+
+
+
 }

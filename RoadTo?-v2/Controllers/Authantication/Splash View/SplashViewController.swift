@@ -55,20 +55,26 @@ class SplashViewController: UIViewController {
         
         // Otomatik ID ile veri ekleme
         db.collection("places").addDocument(data: [
-            "Xcoordinate": "37.78594864108029",
-            "Ycoordinate": "29.025301381269312",
-            "isLiked": true                        ,
-            "isSuitableForChild": true    ,
-            "isSuitableForFamily": true   ,
-            "placeAddress": "Adalet, Kazım Karabekir Cd. No: 34 B, 20040 Denizli Merkezefendi/Denizli",
-            "placeCategory": "Çikolatacı",
-            "placeExplanation": "Denizli’nin lezzet dolu dünyasına hoş geldiniz! Buton çikolata, hem göze hem damağa hitap eden benzersiz bir lezzet deneyimi sunuyor. Yüksek kaliteli kakao çekirdeklerinden özenle hazırlanan bu çikolatalar, minik ve şık görünümleriyle her anınıza tat katmak için ideal bir tercih.\n\nDenizli’nin eşsiz dokusunu ve samimi atmosferini yansıtan bu çikolatalar, özel günlerinize zarif bir dokunuş katmak için mükemmel bir seçenek. İster kahvenizin yanında bir keyif molası, ister sevdiklerinize tatlı bir hediye... Buton çikolata, sade şıklığı ve yoğun lezzetiyle her anı unutulmaz kılıyor.\n\nDenizli'den gelen bu lezzeti denemek için daha fazla beklemeyin! 😊",
-            "placeImage": "LOGO",
-            "placeLocation": "Denizli, Türkiye",
-            "placeName": "ARM",
-            "placeStar": 5.0,
-            "timeToSpend": "30-45",
-            "placeFullName": "Bubon Chocolate"
+            
+            
+            
+            "Xcoordinate": "38.036403000000",
+            "Ycoordinate": "28.953884000000",
+            "isLiked": false,
+            "isSuitableForChild": true,
+            "isSuitableForFamily": true,
+            "placeAddress": "Yenicekent Mahallesi, 20400 Buldan, Denizli, Türkiye",
+            "placeCategory": "Tarihi Yer",
+            "placeExplanation": "Tripolis Antik Kenti, Denizli'nin Buldan ilçesine bağlı Yenicekent Mahallesi'nde yer alan ve Helenistik Dönem'de kurulan önemli bir antik şehirdir. Lidya, Frigya ve Karya bölgelerinin kesişim noktasında bulunan kent, ticaret ve tarım merkezi olarak öne çıkmıştır. Kentte tiyatro, hamam, şehir binası, kale ve surlar gibi yapılar bulunmaktadır. Günümüzde arkeolojik kazılar ve restorasyon çalışmaları devam eden Tripolis, ziyaretçilere antik dönemin izlerini sunmaktadır. :contentReference[oaicite:0]{index=0}",
+            "placeImage": "tripolis",
+            "placeLocation": "Buldan, Denizli, Türkiye",
+            "placeName": "TRİPOLİS ANTİK KENTİ",
+            "placeStar": 4.6,
+            "timeToSpend": "2-3 Saat",
+            "placeFullName": "Tripolis Antik Kenti"
+           
+            
+
         ]) { error in
             if let error = error {
                 print("Hata oluştu: \(error.localizedDescription)")
