@@ -100,14 +100,24 @@ class UserInfoPageViewController: UIViewController {
     @IBAction func logOutButtonPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            // Çıkış işlemi başarılı olduğunda kullanıcıyı giriş ekranına yönlendir
-            let vc = SplashViewController()
-            navigationController?.pushViewController(vc, animated: true)
-        } catch
-            let error {
-                print("Çıkış yapılırken hata oluştu: \(error.localizedDescription)")
+            // Çıkış işlemi başarılı olduğunda root view controller'ı animasyonlu değiştir
+            DispatchQueue.main.async {
+                let entryVC = EntryPageViewController()
+                let navigationController = UINavigationController(rootViewController: entryVC)
+                
+                let window = UIApplication.shared.windows.first
+                window?.rootViewController = navigationController
+                
+                // Fade animasyonu ekle
+                UIView.transition(with: window!,
+                                duration: 0.3,
+                                options: .transitionCrossDissolve,
+                                animations: nil,
+                                completion: nil)
             }
-        
+        } catch let error {
+            print("Çıkış yapılırken hata oluştu: \(error.localizedDescription)")
+        }
     }
     
     

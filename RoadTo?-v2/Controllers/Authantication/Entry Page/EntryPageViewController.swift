@@ -64,7 +64,7 @@ class EntryPageViewController: UIViewController {
     }
     
     @IBAction func anonymousButton(_ sender: Any) {
-        Auth.auth().signInAnonymously { authResult, error in
+        Auth.auth().signInAnonymously { [weak self] authResult, error in
             if let error = error {
                 print("Anonim giriş başarısız: \(error.localizedDescription)")
                 return
@@ -72,15 +72,27 @@ class EntryPageViewController: UIViewController {
             
             // Giriş başarılı
             if let user = authResult?.user {
-                let isAnonymous = user.isAnonymous  // Kullanıcının anonim olup olmadığını kontrol et
+                let isAnonymous = user.isAnonymous
                 let uid = user.uid
                 print("Anonim giriş başarılı! UID: \(uid), Anonim: \(isAnonymous)")
                 
-                let vc = WelcomeViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
+                // Root view controller'ı animasyonlu değiştir
+                DispatchQueue.main.async {
+                    let welcomeVC = WelcomeViewController()
+                    let navigationController = UINavigationController(rootViewController: welcomeVC)
+                    
+                    let window = UIApplication.shared.windows.first
+                    window?.rootViewController = navigationController
+                    
+                    // Fade animasyonu ekle
+                    UIView.transition(with: window!,
+                                    duration: 0.3,
+                                    options: .transitionCrossDissolve,
+                                    animations: nil,
+                                    completion: nil)
+                }
             }
         }
-        
     }
     
     @IBAction func signInWithGooglePressed(_ sender: Any) {

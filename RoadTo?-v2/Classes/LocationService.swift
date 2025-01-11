@@ -26,36 +26,32 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        requestLocationAuthorization()
-    }
-
-    /// Konum izni isteği
-    private func requestLocationAuthorization() {
-        let status = locationManager.authorizationStatus
-        switch status {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .denied, .restricted:
-            print("Kullanıcı konum iznini reddetti veya kısıtlandı.")
-        case .authorizedAlways, .authorizedWhenInUse:
-            print("Konum izni verildi.")
-        @unknown default:
-            print("Bilinmeyen bir durum oluştu.")
-        }
     }
 
     /// Konum izleme işlemini başlatır
     func startUpdatingLocation() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-        } else {
-            print("Konum servisleri devre dışı.")
-        }
+        // Önce yetkilendirme durumunu kontrol et
+        checkLocationAuthorization()
     }
 
     /// Konum izleme işlemini durdurur
     func stopUpdatingLocation() {
         locationManager.stopUpdatingLocation()
+    }
+
+    // MARK: - Private Methods
+
+    private func checkLocationAuthorization() {
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.startUpdatingLocation()
+        case .denied, .restricted:
+            print("Konum izni reddedildi veya kısıtlandı.")
+        @unknown default:
+            print("Bilinmeyen bir durum oluştu.")
+        }
     }
 
     // MARK: - CLLocationManagerDelegate
@@ -80,17 +76,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
 
     /// Kullanıcı izni durum değişikliği olduğunda çağrılır
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let status = manager.authorizationStatus
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            print("Konum izni verildi.")
-        case .denied, .restricted:
-            print("Konum izni reddedildi veya kısıtlandı.")
-        case .notDetermined:
-            print("Konum izni henüz verilmedi.")
-        @unknown default:
-            print("Bilinmeyen bir izin durumu.")
-        }
+        checkLocationAuthorization()
     }
 
     // MARK: - Şehir Bilgisi Alımı
