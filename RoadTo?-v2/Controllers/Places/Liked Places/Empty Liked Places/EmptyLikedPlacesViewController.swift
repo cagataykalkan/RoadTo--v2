@@ -39,8 +39,17 @@ class EmptyLikedPlacesViewController: UIViewController {
     }
 
     @IBAction func backButtonPressed(_ sender: Any) {
-        let vc = PlacesViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        if let window = UIApplication.shared.windows.first {
+            let placesVC = PlacesViewController()
+            let navigationController = UINavigationController(rootViewController: placesVC)
+            
+            UIView.transition(with: window,
+                             duration: 0.5,
+                             options: .transitionCrossDissolve,
+                             animations: {
+                window.rootViewController = navigationController
+            }, completion: nil)
+        }
     }
     
 }

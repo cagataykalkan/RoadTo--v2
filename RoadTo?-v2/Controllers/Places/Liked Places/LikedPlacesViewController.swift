@@ -20,7 +20,6 @@ class LikedPlacesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reloadPlaces()
         setupTableView()
         setupUI()
     }
@@ -48,16 +47,31 @@ class LikedPlacesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reloadPlaces()
+        
+        if isViewLoaded {
+            reloadPlaces()
+        }
     }
     
     func reloadPlaces() {
-        likedPlacesTableView.reloadData()
+        let currentLikedPlaces = DataManager.shared.places.filter { $0.isLiked }
         
-        // Eğer hiç beğenilen mekan yoksa kullanıcıyı yönlendir
-        if likedPlaces.isEmpty {
-            let vc = EmptyLikedPlacesViewController()
-            navigationController?.pushViewController(vc, animated: true)
+        if currentLikedPlaces.isEmpty {
+            if !(self.navigationController?.topViewController is EmptyLikedPlacesViewController) {
+                let emptyVC = EmptyLikedPlacesViewController()
+                
+                UIView.transition(with: self.view,
+                                duration: 0.3,
+                                options: .transitionCrossDissolve,
+                                animations: {
+                    self.navigationController?.pushViewController(emptyVC, animated: false)
+                }, completion: nil)
+            }
+        } else {
+            if self.navigationController?.topViewController is EmptyLikedPlacesViewController {
+                self.navigationController?.popViewController(animated: true)
+            }
+            likedPlacesTableView.reloadData()
         }
     }
     
