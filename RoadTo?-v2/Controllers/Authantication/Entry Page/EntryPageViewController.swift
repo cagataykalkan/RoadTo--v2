@@ -65,8 +65,12 @@ class EntryPageViewController: UIViewController {
     
     @IBAction func anonymousButton(_ sender: Any) {
         Auth.auth().signInAnonymously { [weak self] authResult, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                print("Anonim giriş başarısız: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Hata", message: "Anonim giriş başarısız: \(error.localizedDescription)")
+                }
                 return
             }
             
@@ -76,7 +80,6 @@ class EntryPageViewController: UIViewController {
                 let uid = user.uid
                 print("Anonim giriş başarılı! UID: \(uid), Anonim: \(isAnonymous)")
                 
-                // Root view controller'ı animasyonlu değiştir
                 DispatchQueue.main.async {
                     let welcomeVC = WelcomeViewController()
                     let navigationController = UINavigationController(rootViewController: welcomeVC)
@@ -84,7 +87,6 @@ class EntryPageViewController: UIViewController {
                     let window = UIApplication.shared.windows.first
                     window?.rootViewController = navigationController
                     
-                    // Fade animasyonu ekle
                     UIView.transition(with: window!,
                                     duration: 0.3,
                                     options: .transitionCrossDissolve,
@@ -93,6 +95,13 @@ class EntryPageViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    // Alert helper fonksiyonu
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        present(alert, animated: true)
     }
     
     @IBAction func signInWithGooglePressed(_ sender: Any) {

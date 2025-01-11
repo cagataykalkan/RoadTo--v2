@@ -54,18 +54,72 @@ class RegisterPageViewController: UIViewController {
     }
     
     @IBAction func registerButtonPressed(_ sender: Any) {
-        if let email = emailTextField.text , let password = passwordTextField.text{
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if let e = error{
-                    print(e.localizedDescription)
-                }else{
-                    let destinationVC = NameViewController()
-                    self.navigationController?.pushViewController(destinationVC, animated: true)
-                }
-                
-            }
+        // Boş alan kontrolü
+        guard let email = emailTextField.text, !email.isEmpty else {
+            showAlert(title: "Hata", message: "Lütfen e-posta adresinizi giriniz.")
+            return
         }
         
+        guard let password = passwordTextField.text, !password.isEmpty else {
+            showAlert(title: "Hata", message: "Lütfen şifrenizi giriniz.")
+            return
+        }
         
+        // Şifre uzunluk kontrolü
+        if password.count < 6 {
+            showAlert(title: "Hata", message: "Şifreniz en az 6 karakter olmalıdır.")
+            return
+        }
+        
+        // E-posta formatı kontrolü
+        if !isValidEmail(email) {
+            showAlert(title: "Hata", message: "Lütfen geçerli bir e-posta adresi giriniz.")
+            return
+        }
+        
+        // Firebase kayıt işlemi
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                let errorMessage: String
+                
+                switch error.localizedDescription {
+                case "The email address is already in use by another account.":
+                    errorMessage = "Bu e-posta adresi zaten kullanımda."
+                case "The email address is badly formatted.":
+                    errorMessage = "E-posta adresi formatı hatalı."
+                case "The password must be 6 characters long or more.":
+                    errorMessage = "Şifre en az 6 karakter olmalıdır."
+                default:
+                    errorMessage = "Kayıt olurken bir hata oluştu: \(error.localizedDescription)"
+                }
+                
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Hata", message: errorMessage)
+                }
+                return
+            }
+            
+            // Kayıt başarılı
+            DispatchQueue.main.async {
+                let nameVC = NameViewController()
+                self.navigationController?.pushViewController(nameVC, animated: true)
+            }
+        }
+    }
+    
+    // E-posta format kontrolü için yardımcı fonksiyon
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    // Alert helper fonksiyonu
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        present(alert, animated: true)
     }
 }

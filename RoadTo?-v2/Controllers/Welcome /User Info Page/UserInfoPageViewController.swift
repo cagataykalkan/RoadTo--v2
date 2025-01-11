@@ -73,20 +73,28 @@ class UserInfoPageViewController: UIViewController {
     
     func fetchUserInfoFromFirestore(completion: @escaping (UserInfo?) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else {
+            showAlert(title: "Hata", message: "Kullanıcı bilgisi bulunamadı.")
             completion(nil)
             return
         }
         
         let db = Firestore.firestore()
-        db.collection("users").document(userID).getDocument { document, error in
+        db.collection("users").document(userID).getDocument { [weak self] document, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                print("Error fetching user info: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Hata", message: "Kullanıcı bilgileri alınamadı: \(error.localizedDescription)")
+                }
                 completion(nil)
             } else if let document = document, document.exists,
                       let data = document.data() {
                 let userInfo = UserInfo(data: data)
                 completion(userInfo)
             } else {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Bilgi", message: "Kullanıcı bilgileri bulunamadı.")
+                }
                 completion(nil)
             }
         }
@@ -100,7 +108,6 @@ class UserInfoPageViewController: UIViewController {
     @IBAction func logOutButtonPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            // Çıkış işlemi başarılı olduğunda root view controller'ı animasyonlu değiştir
             DispatchQueue.main.async {
                 let entryVC = EntryPageViewController()
                 let navigationController = UINavigationController(rootViewController: entryVC)
@@ -108,7 +115,6 @@ class UserInfoPageViewController: UIViewController {
                 let window = UIApplication.shared.windows.first
                 window?.rootViewController = navigationController
                 
-                // Fade animasyonu ekle
                 UIView.transition(with: window!,
                                 duration: 0.3,
                                 options: .transitionCrossDissolve,
@@ -116,8 +122,15 @@ class UserInfoPageViewController: UIViewController {
                                 completion: nil)
             }
         } catch let error {
-            print("Çıkış yapılırken hata oluştu: \(error.localizedDescription)")
+            showAlert(title: "Hata", message: "Çıkış yapılırken hata oluştu: \(error.localizedDescription)")
         }
+    }
+    
+    // Alert helper fonksiyonu
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        present(alert, animated: true)
     }
     
     

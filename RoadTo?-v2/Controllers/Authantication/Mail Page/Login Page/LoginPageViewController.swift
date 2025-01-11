@@ -76,18 +76,76 @@ class LoginPageViewController: UIViewController {
     
     
     @IBAction func loginButtonPressed(_ sender: Any) {
-        if let email = emailTextfield.text , let password = passwordTextfield.text{
-            Auth.auth().signIn(withEmail: email, password: password) {authResult, error in
-                if let e = error{
-                    print(e.localizedDescription)
-                }else{
-                    let destinationVC = WelcomeViewController()
-                    self.navigationController?.pushViewController(destinationVC, animated: true)
+        // Boş alan kontrolü
+        guard let email = emailTextfield.text, !email.isEmpty else {
+            showAlert(title: "Hata", message: "Lütfen e-posta adresinizi giriniz.")
+            return
+        }
+        
+        guard let password = passwordTextfield.text, !password.isEmpty else {
+            showAlert(title: "Hata", message: "Lütfen şifrenizi giriniz.")
+            return
+        }
+        
+        // E-posta formatı kontrolü
+        if !isValidEmail(email) {
+            showAlert(title: "Hata", message: "Lütfen geçerli bir e-posta adresi giriniz.")
+            return
+        }
+        
+        // Firebase giriş işlemi
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                let errorMessage: String
+                
+                switch error.localizedDescription {
+                case "The password is invalid or the user does not have a password.":
+                    errorMessage = "Şifre hatalı veya eksik."
+                case "There is no user record corresponding to this identifier. The user may have been deleted.":
+                    errorMessage = "Bu e-posta adresiyle kayıtlı bir kullanıcı bulunamadı."
+                case "The email address is badly formatted.":
+                    errorMessage = "E-posta adresi formatı hatalı."
+                default:
+                    errorMessage = "Giriş yapılırken bir hata oluştu: \(error.localizedDescription)"
                 }
                 
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Hata", message: errorMessage)
+                }
+                return
             }
             
+            // Giriş başarılı
+            DispatchQueue.main.async {
+                let welcomeVC = WelcomeViewController()
+                let navigationController = UINavigationController(rootViewController: welcomeVC)
+                
+                let window = UIApplication.shared.windows.first
+                window?.rootViewController = navigationController
+                
+                UIView.transition(with: window!,
+                                duration: 0.3,
+                                options: .transitionCrossDissolve,
+                                animations: nil,
+                                completion: nil)
+            }
         }
+    }
+    
+    // E-posta format kontrolü için yardımcı fonksiyon
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    // Alert helper fonksiyonu
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        present(alert, animated: true)
     }
     
     
