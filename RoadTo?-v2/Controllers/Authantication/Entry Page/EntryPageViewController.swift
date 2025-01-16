@@ -34,7 +34,6 @@ class EntryPageViewController: UIViewController {
     func setupUI() {
         welcomeLabel.text = "Seyahatinizi planlamaya başlamak için giriş yapın."
         configureBorder(for: appleView)
-        configureBorder(for: googleView)
         configureBorder(for: mailView)
         
     }
